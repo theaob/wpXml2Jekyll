@@ -6,7 +6,7 @@ wpXml2Jekyll is a tool that converts your Wordpress XML file to individual [Jeky
 2. This tool **doesn't** require any database connection for post generation
 3. Hell, if you've downloaded the required files before, you may not need any internet connection
 
-## What the weird name?
+## Why The Weird Name?
 
 It may **look** weird but it is actually very self explanatory.
 
