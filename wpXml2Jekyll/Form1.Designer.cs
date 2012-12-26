@@ -78,7 +78,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Wordpress XML to Jekyll";
             this.ResumeLayout(false);
 
         }

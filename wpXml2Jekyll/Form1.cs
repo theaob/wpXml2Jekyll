@@ -53,8 +53,7 @@ namespace wpXml2Jekyll
                 return;
             }
 
-
-            TextReader tr = new StreamReader(openFileDialog1.FileName);
+            TextReader tr = new StreamReader(openFileDialog1.FileName,Encoding.UTF8);
             //XmlTextReader tr = new XmlTextReader(openFileDialog1.FileName);
             String line;
             while ((line = tr.ReadLine())!=null)
