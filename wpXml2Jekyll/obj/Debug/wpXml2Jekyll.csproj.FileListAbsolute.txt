@@ -1,15 +1,9 @@
-C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.Form1.resources
-C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.Properties.Resources.resources
-C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.csproj.GenerateResource.Cache
-C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\wpXml2Jekyll\wpXml2Jekyll\bin\Debug\wpXml2Jekyll.exe
-C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\wpXml2Jekyll\wpXml2Jekyll\bin\Debug\wpXml2Jekyll.pdb
-C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.exe
-C:\Users\Test Pc1\Documents\Visual Studio 2008\Projects\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.pdb
-C:\Users\Onur\Documents\GitHub\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.exe
-C:\Users\Onur\Documents\GitHub\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.pdb
-C:\Users\Onur\Documents\GitHub\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.Form1.resources
-C:\Users\Onur\Documents\GitHub\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.Properties.Resources.resources
-C:\Users\Onur\Documents\GitHub\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.csproj.GenerateResource.Cache
-C:\Users\Onur\Documents\GitHub\wpXml2Jekyll\wpXml2Jekyll\bin\Debug\wpXml2Jekyll.exe
-C:\Users\Onur\Documents\GitHub\wpXml2Jekyll\wpXml2Jekyll\bin\Debug\wpXml2Jekyll.pdb
+C:\Users\Test Pc1\Desktop\wpXml2Jekyll\wpXml2Jekyll\bin\Debug\wpXml2Jekyll.exe
+C:\Users\Test Pc1\Desktop\wpXml2Jekyll\wpXml2Jekyll\bin\Debug\wpXml2Jekyll.pdb
+C:\Users\Test Pc1\Desktop\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Test Pc1\Desktop\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.UIForm.resources
+C:\Users\Test Pc1\Desktop\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.Properties.Resources.resources
+C:\Users\Test Pc1\Desktop\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\GenerateResource.read.1.tlog
+C:\Users\Test Pc1\Desktop\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\GenerateResource.write.1.tlog
+C:\Users\Test Pc1\Desktop\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.exe
+C:\Users\Test Pc1\Desktop\wpXml2Jekyll\wpXml2Jekyll\obj\Debug\wpXml2Jekyll.pdb
