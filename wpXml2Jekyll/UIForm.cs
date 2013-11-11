@@ -46,10 +46,10 @@ namespace wpXml2Jekyll
                 return;
             }
 
-            lines = PopulateLines(openFileDialog1.FileName, add2List);
+            lines = ReadPosts(openFileDialog1.FileName, add2List);
         }
 
-        public LinkedList<string> PopulateLines(string fileName, Action<string> reporter)
+        public LinkedList<string> ReadPosts(string fileName, Action<string> reporter)
         {
             using (TextReader tr = new StreamReader(fileName, Encoding.UTF8))
             {
@@ -143,10 +143,10 @@ namespace wpXml2Jekyll
                 return;
             }
 
-            WritePostToMarkdown(lines);
+            WritePostToMarkdown(lines, folderBrowserDialog1.SelectedPath);
         }
 
-        public void WritePostToMarkdown(LinkedList<string> linesToWrite)
+        public void WritePostToMarkdown(LinkedList<string> linesToWrite, string outputFolder)
         {
             LinkedList<Post> posts = new LinkedList<Post>();
 
@@ -161,7 +161,7 @@ namespace wpXml2Jekyll
             {
                 using (
                     TextWriter tw =
-                        new StreamWriter(folderBrowserDialog1.SelectedPath + Path.DirectorySeparatorChar +
+                        new StreamWriter(outputFolder + Path.DirectorySeparatorChar +
                                          p.date.ToString("yyyy-MM-dd-") + p.postURL + ".md"))
                 {
                     tw.WriteLine("---");
