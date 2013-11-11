@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using System.Xml;
 
 namespace wpXml2Jekyll
 {
     public partial class UIForm : Form
     {
         LinkedList<String> lines = new LinkedList<string>();
-        LinkedList<Post> posts = new LinkedList<Post>();
 
         public UIForm()
         {
@@ -148,27 +143,36 @@ namespace wpXml2Jekyll
                 return;
             }
 
-            posts.Clear();
+            WritePostToMarkdown(lines);
+        }
 
-            for (int i = 0; i < lines.Count; i += 4)
+        public void WritePostToMarkdown(LinkedList<string> linesToWrite)
+        {
+            LinkedList<Post> posts = new LinkedList<Post>();
+
+            for (int i = 0; i < linesToWrite.Count; i += 4)
             {
-                posts.AddLast(new Post(lines.ElementAt(i), lines.ElementAt(i + 2), lines.ElementAt(i + 1), lines.ElementAt(i + 3)));
+                posts.AddLast(new Post(linesToWrite.ElementAt(i), linesToWrite.ElementAt(i + 2), linesToWrite.ElementAt(i + 1),
+                    linesToWrite.ElementAt(i + 3)));
             }
 
-            TextWriter tw;
 
             foreach (Post p in posts)
             {
-                tw = new StreamWriter(folderBrowserDialog1.SelectedPath + "\\" + p.date.ToString("yyyy-MM-dd-") + p.postURL + ".md");
-                tw.WriteLine("---");
-                tw.WriteLine("layout: post");
-                tw.WriteLine("title: " + p.postTitle);
-                tw.WriteLine("date: " + p.date.ToString("yyyy-MM-dd HH:mm"));
-                tw.WriteLine("comments: true");
-                tw.WriteLine("categories: []");
-                tw.WriteLine("---");
-                tw.WriteLine(p.post);
-                tw.Close();
+                using (
+                    TextWriter tw =
+                        new StreamWriter(folderBrowserDialog1.SelectedPath + Path.DirectorySeparatorChar +
+                                         p.date.ToString("yyyy-MM-dd-") + p.postURL + ".md"))
+                {
+                    tw.WriteLine("---");
+                    tw.WriteLine("layout: post");
+                    tw.WriteLine("title: " + p.postTitle);
+                    tw.WriteLine("date: " + p.date.ToString("yyyy-MM-dd HH:mm"));
+                    tw.WriteLine("comments: true");
+                    tw.WriteLine("categories: []");
+                    tw.WriteLine("---");
+                    tw.WriteLine(p.post);
+                }
             }
         }
     }
