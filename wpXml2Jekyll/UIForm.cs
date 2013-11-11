@@ -53,68 +53,82 @@ namespace wpXml2Jekyll
                 return;
             }
 
-            TextReader tr = new StreamReader(openFileDialog1.FileName,Encoding.UTF8);
-            String line;
-            while ((line = tr.ReadLine())!=null)
+            lines = PopulateLines(openFileDialog1.FileName);
+        }
+
+        public LinkedList<string> PopulateLines(string fileName )
+        {
+            using (TextReader tr = new StreamReader(fileName, Encoding.UTF8))
             {
-                if (line.Contains("<title>"))
+                var exportFileContent = tr.ReadToEnd();
+
+                return ParseExportFileContent(exportFileContent);
+            }
+        }
+
+        private LinkedList<string> ParseExportFileContent(string exportFileContent)
+        {
+            using (StringReader stringReader = new StringReader(exportFileContent))
+            {
+                var parsedLines = new LinkedList<string>();
+                string line;
+                while ((line = stringReader.ReadLine()) != null)
                 {
-                    if (title)
+                    if (line.Contains("<title>"))
+                    {
+                        if (title)
+                        {
+                            line = line.Substring(line.IndexOf('>') + 1, line.LastIndexOf('<') - line.IndexOf('>') - 1);
+                            parsedLines.AddLast(line);
+                            add2List(line);
+                        }
+                        else
+                        {
+                            title = true;
+                        }
+                    }
+                    else if (line.Contains("<wp:post_date>"))
                     {
                         line = line.Substring(line.IndexOf('>') + 1, line.LastIndexOf('<') - line.IndexOf('>') - 1);
-                        lines.AddLast(line);
+                        int year = int.Parse(line.Substring(0, 4));
+                        int month = int.Parse(line.Substring(5, 2));
+                        int day = int.Parse(line.Substring(8, 2));
+                        DateTime date = new DateTime(year, month, day);
+
+                        parsedLines.AddLast(line.ToString());
+                        add2List(date.ToShortDateString());
+                    }
+                    else if (line.Contains("<content:encoded>") && line.Contains("</content:encoded>"))
+                    {
+                        line = line.Substring(28);
+                        line = line.Substring(0, line.Length - 21);
+                        parsedLines.AddLast(line);
                         add2List(line);
                     }
-                    else
+                    else if (line.Contains("<content:encoded>"))
                     {
-                        title = true;
-                    }
-                    
-                }else if(line.Contains("<wp:post_date>"))
-                {
-                    line = line.Substring(line.IndexOf('>') + 1, line.LastIndexOf('<') - line.IndexOf('>') - 1);
-                    int year = int.Parse(line.Substring(0, 4));
-                    int month = int.Parse(line.Substring(5, 2));
-                    int day = int.Parse(line.Substring(8, 2));
-                    DateTime date = new DateTime(year,month,day);
-
-                    lines.AddLast(line.ToString());
-                    add2List(date.ToShortDateString());
-                }
-                else if (line.Contains("<content:encoded>") && line.Contains("</content:encoded>"))
-                {
-                    
-                    line = line.Substring(28);
-                    line = line.Substring(0, line.Length - 21);
-                    lines.AddLast(line);
-                    add2List(line);
-                }
-                else if (line.Contains("<content:encoded>"))
-                {
-                    while (true)
-                    {
-                        line += "\r\n" + tr.ReadLine();
-                        if(line.Contains("</content:encoded>"))
+                        while (true)
                         {
-                            break;
+                            line += "\r\n" + stringReader.ReadLine();
+                            if (line.Contains("</content:encoded>"))
+                            {
+                                break;
+                            }
                         }
-                        
+                        line = line.Substring(28);
+                        line = line.Substring(0, line.Length - 21);
+                        parsedLines.AddLast(line);
+                        add2List(line);
                     }
-                    line = line.Substring(28);
-                    line = line.Substring(0,line.Length-21);
-                    lines.AddLast(line);
-                    add2List(line);
-                }else if(line.Contains("<wp:post_name>"))
-                {
-                    line = line.Substring(line.IndexOf('>') + 1, line.LastIndexOf('<') - line.IndexOf('>') - 1);
-                    lines.AddLast(line);
-                    add2List(line);
+                    else if (line.Contains("<wp:post_name>"))
+                    {
+                        line = line.Substring(line.IndexOf('>') + 1, line.LastIndexOf('<') - line.IndexOf('>') - 1);
+                        parsedLines.AddLast(line);
+                        add2List(line);
+                    }
                 }
-
-
+                return parsedLines;
             }
-
-            tr.Close();
         }
 
 
