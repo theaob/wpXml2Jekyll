@@ -16,8 +16,6 @@ namespace wpXml2Jekyll
         LinkedList<String> lines = new LinkedList<string>();
         LinkedList<Post> posts = new LinkedList<Post>();
 
-        bool title = false;
-
         public UIForm()
         {
             InitializeComponent();
@@ -53,34 +51,38 @@ namespace wpXml2Jekyll
                 return;
             }
 
-            lines = PopulateLines(openFileDialog1.FileName);
+            lines = PopulateLines(openFileDialog1.FileName, add2List);
         }
 
-        public LinkedList<string> PopulateLines(string fileName )
+        public LinkedList<string> PopulateLines(string fileName, Action<string> reporter)
         {
             using (TextReader tr = new StreamReader(fileName, Encoding.UTF8))
             {
                 var exportFileContent = tr.ReadToEnd();
 
-                return ParseExportFileContent(exportFileContent);
+                return ParseExportFileContent(exportFileContent, reporter);
             }
         }
 
-        private LinkedList<string> ParseExportFileContent(string exportFileContent)
+
+        private LinkedList<string> ParseExportFileContent(string exportFileContent, Action<string> reporter)
         {
             using (StringReader stringReader = new StringReader(exportFileContent))
             {
                 var parsedLines = new LinkedList<string>();
                 string line;
+                bool title = false;
+
                 while ((line = stringReader.ReadLine()) != null)
                 {
                     if (line.Contains("<title>"))
                     {
+
                         if (title)
                         {
                             line = line.Substring(line.IndexOf('>') + 1, line.LastIndexOf('<') - line.IndexOf('>') - 1);
                             parsedLines.AddLast(line);
-                            add2List(line);
+                            reporter(line);
                         }
                         else
                         {
@@ -96,14 +98,14 @@ namespace wpXml2Jekyll
                         DateTime date = new DateTime(year, month, day);
 
                         parsedLines.AddLast(line.ToString());
-                        add2List(date.ToShortDateString());
+                        reporter(date.ToShortDateString());
                     }
                     else if (line.Contains("<content:encoded>") && line.Contains("</content:encoded>"))
                     {
                         line = line.Substring(28);
                         line = line.Substring(0, line.Length - 21);
                         parsedLines.AddLast(line);
-                        add2List(line);
+                        reporter(line);
                     }
                     else if (line.Contains("<content:encoded>"))
                     {
@@ -118,13 +120,13 @@ namespace wpXml2Jekyll
                         line = line.Substring(28);
                         line = line.Substring(0, line.Length - 21);
                         parsedLines.AddLast(line);
-                        add2List(line);
+                        reporter(line);
                     }
                     else if (line.Contains("<wp:post_name>"))
                     {
                         line = line.Substring(line.IndexOf('>') + 1, line.LastIndexOf('<') - line.IndexOf('>') - 1);
                         parsedLines.AddLast(line);
-                        add2List(line);
+                        reporter(line);
                     }
                 }
                 return parsedLines;
