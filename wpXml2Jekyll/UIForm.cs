@@ -18,17 +18,17 @@ namespace wpXml2Jekyll
 
         public struct Post
         {
-            public String postTitle;
+            public String title;
             public DateTime date;
-            public String post;
-            public String postURL;
+            public String content;
+            public String url;
 
-            public Post(String title, String then, String content, String postur)
+            public Post(String postTitle, String postDate, String postContent, String postURL)
             {
-                postTitle = title;
-                date = DateTime.Parse(then);
-                post = content;
-                postURL = postur;
+                title = postTitle;
+                date = DateTime.Parse(postDate);
+                content = postContent;
+                url = postURL;
             }
         }
 
@@ -70,7 +70,18 @@ namespace wpXml2Jekyll
 
                 while ((line = stringReader.ReadLine()) != null)
                 {
-                    if (line.Contains("<title>"))
+                    if (line.Contains("<image>"))
+                    {
+                        while (true)
+                        {
+                            line += "\r\n" + stringReader.ReadLine();
+                            if (line.Contains("</image>"))
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    else if (line.Contains("<title>"))
                     {
 
                         if (title)
@@ -123,6 +134,12 @@ namespace wpXml2Jekyll
                         parsedLines.AddLast(line);
                         reporter(line);
                     }
+                    else if (line.Contains("<wp:status>draft</wp:status>"))
+                    {
+                        line = "draft";
+                        parsedLines.AddLast(line);
+                        reporter(line);
+                    }
                 }
                 return parsedLines;
             }
@@ -152,8 +169,21 @@ namespace wpXml2Jekyll
 
             for (int i = 0; i < linesToWrite.Count; i += 4)
             {
-                posts.AddLast(new Post(linesToWrite.ElementAt(i), linesToWrite.ElementAt(i + 2), linesToWrite.ElementAt(i + 1),
-                    linesToWrite.ElementAt(i + 3)));
+                try
+                {
+                    Post newPost = new Post();
+
+                    newPost.title = linesToWrite.ElementAt(i);
+                    newPost.content = linesToWrite.ElementAt(i + 1);
+                    newPost.date = DateTime.Parse(linesToWrite.ElementAt(i + 2));
+                    newPost.url = linesToWrite.ElementAt(i + 3);
+
+                    posts.AddLast(newPost);
+                }
+                catch(FormatException exp)
+                {
+                    //Draft post without any content are handled here
+                }
             }
 
 
@@ -162,16 +192,16 @@ namespace wpXml2Jekyll
                 using (
                     TextWriter tw =
                         new StreamWriter(outputFolder + Path.DirectorySeparatorChar +
-                                         p.date.ToString("yyyy-MM-dd-") + p.postURL + ".md"))
+                                         p.date.ToString("yyyy-MM-dd-") + p.url + ".md"))
                 {
                     tw.WriteLine("---");
                     tw.WriteLine("layout: post");
-                    tw.WriteLine("title: " + p.postTitle);
+                    tw.WriteLine("title: " + p.title);
                     tw.WriteLine("date: " + p.date.ToString("yyyy-MM-dd HH:mm"));
                     tw.WriteLine("comments: true");
                     tw.WriteLine("categories: []");
                     tw.WriteLine("---");
-                    tw.WriteLine(p.post);
+                    tw.WriteLine(p.content);
                 }
             }
         }
