@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace wpXml2Jekyll
 {
@@ -17,6 +18,7 @@ namespace wpXml2Jekyll
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+                FreeConsole();
                 Application.Run(new UIForm());
             }
             else
@@ -33,5 +35,8 @@ namespace wpXml2Jekyll
                 application.WritePostToMarkdown(posts, outputFolder);
             }
         }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern int FreeConsole();
     }
 }
