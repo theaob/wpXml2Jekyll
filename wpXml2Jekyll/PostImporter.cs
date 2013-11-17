@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Xml;
 
 namespace wpXml2Jekyll
 {
@@ -15,6 +16,13 @@ namespace wpXml2Jekyll
 
                 return ParseExportFileContent(exportFileContent, reporter);
             }
+        }
+
+        public XmlDocument ReadWpPosts(string fileName)
+        {
+            var xmlDocument = new XmlDocument();
+            xmlDocument.Load(fileName);
+            return xmlDocument;
         }
 
         private LinkedList<string> ParseExportFileContent(string exportFileContent, Action<string> reporter)
