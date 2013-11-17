@@ -31,8 +31,8 @@ namespace wpXml2Jekyll
                 var wordpressXmlFile = args[0];
                 var outputFolder = args[1];
                 var application = new UIForm();
-                var posts = application.ReadPosts(wordpressXmlFile, s => { });
-                application.WritePostToMarkdown(posts, outputFolder);
+                var posts = new PostImporter().ReadPosts(wordpressXmlFile, s => { });
+                new PostWriter().WritePostToMarkdown(posts, outputFolder);
             }
         }
 

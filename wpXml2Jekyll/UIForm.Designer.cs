@@ -90,6 +90,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ListBox listBox1;
+        private readonly PostImporter _postImporter = new PostImporter();
     }
 }
 

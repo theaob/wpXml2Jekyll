@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PostImporter.cs" />
+    <Compile Include="PostWriter.cs" />
     <Compile Include="UIForm.cs">
       <SubType>Form</SubType>
     </Compile>
