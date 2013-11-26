@@ -8,7 +8,7 @@ wpXml2Jekyll is a tool that converts your Wordpress XML file to individual [Jeky
 
 ## Usage
 
-You can download wpXml2Jekyll v1.1 from [here](https://github.com/theaob/wpXml2Jekyll/raw/v1.1/wpXml2Jekyll.exe) as a compiled binary. You can run the executable as a windows application or run it on console as:
+You can download wpXml2Jekyll v1.2 from [here](https://github.com/theaob/wpXml2Jekyll/raw/v1.2/wpXml2Jekyll.exe) as a compiled binary. You can run the executable as a windows application or run it on console as:
 ```
 wpXml2Jekyll [wordpress export file] [output folder]
 ```
