@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml;
 
 namespace wpXml2Jekyll
 {
     public partial class UIForm : Form
     {
-        LinkedList<String> lines = new LinkedList<string>();
+        private XmlDocument xmlDocument;
         private readonly PostWriter _postWriter;
 
         public UIForm()
@@ -18,21 +19,7 @@ namespace wpXml2Jekyll
             _postWriter = new PostWriter();
         }
 
-        public struct Post
-        {
-            public String title;
-            public DateTime date;
-            public String content;
-            public String url;
-
-            public Post(String postTitle, String postDate, String postContent, String postURL)
-            {
-                title = postTitle;
-                date = DateTime.Parse(postDate);
-                content = postContent;
-                url = postURL;
-            }
-        }
+        
 
         public PostWriter PostWriter
         {
@@ -41,7 +28,6 @@ namespace wpXml2Jekyll
 
         private void button1_Click(object sender, EventArgs e)
         {
-            lines.Clear();
             listBox1.Items.Clear();
 
             openFileDialog1.FileName = "";
@@ -53,7 +39,7 @@ namespace wpXml2Jekyll
                 return;
             }
 
-            lines = new PostImporter().ReadPosts(openFileDialog1.FileName, add2List);
+            xmlDocument = new PostImporter().ReadWpPosts(openFileDialog1.FileName);
         }
 
 
@@ -71,7 +57,7 @@ namespace wpXml2Jekyll
                 return;
             }
 
-            PostWriter.WritePostToMarkdown(lines, folderBrowserDialog1.SelectedPath);
+            PostWriter.WritePostToMarkdown(xmlDocument, folderBrowserDialog1.SelectedPath);
         }
     }
 }

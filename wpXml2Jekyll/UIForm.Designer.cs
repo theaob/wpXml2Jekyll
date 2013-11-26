@@ -67,7 +67,7 @@
             this.listBox1.Size = new System.Drawing.Size(545, 368);
             this.listBox1.TabIndex = 3;
             // 
-            // Form1
+            // UIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -77,7 +77,7 @@
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "UIForm";
             this.Text = "Wordpress XML to Jekyll";
             this.ResumeLayout(false);
 

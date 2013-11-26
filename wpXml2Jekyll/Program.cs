@@ -31,16 +31,9 @@ namespace wpXml2Jekyll
                 }
                 var wordpressXmlFile = args[0];
                 var outputFolder = args[1];
-                if (Settings.Default.UseXmlParsing)
-                {
-                    var posts = new PostImporter().ReadWpPosts(wordpressXmlFile);
-                    new PostWriter().WritePostToMarkdown(posts, outputFolder);
-                }
-                else
-                {
-                    var posts = new PostImporter().ReadPosts(wordpressXmlFile, s => { });
-                    new PostWriter().WritePostToMarkdown(posts, outputFolder);
-                }
+
+                var posts = new PostImporter().ReadWpPosts(wordpressXmlFile);
+                new PostWriter().WritePostToMarkdown(posts, outputFolder);
             }
         }
 
