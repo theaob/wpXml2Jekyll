@@ -33,7 +33,8 @@ namespace wpXml2Jekyll
                 var outputFolder = args[1];
 
                 var posts = new PostImporter().ReadWpPosts(wordpressXmlFile);
-                new PostWriter().WritePostToMarkdown(posts, outputFolder);
+                int count = new PostWriter().WritePostToMarkdown(posts, outputFolder);
+                Console.WriteLine("Saved " + count + " posts");
             }
         }
 

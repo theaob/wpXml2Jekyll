@@ -9,13 +9,11 @@ namespace wpXml2Jekyll
     public class PostWriter
     {
         private readonly String _postTypeAttachment = "attachment";
-        private readonly String _postTypePost = "post";
-        private readonly String _postTypePage = "page";
 
-        public void WritePostToMarkdown(XmlDocument xmlDocumentToWrite, string outputFolder)
+        public int WritePostToMarkdown(XmlDocument xmlDocumentToWrite, string outputFolder)
         {
             var items = xmlDocumentToWrite.SelectNodes("//item");
-
+            int postCount = 0;
             var namespaceManager = new XmlNamespaceManager(xmlDocumentToWrite.NameTable);
             namespaceManager.AddNamespace("wp", "http://wordpress.org/export/1.2/");
             namespaceManager.AddNamespace("content", "http://purl.org/rss/1.0/modules/content/");
@@ -59,11 +57,12 @@ namespace wpXml2Jekyll
                             tw.WriteLine("]");
                             tw.WriteLine("---");
                             tw.WriteLine(p.content);
+                            postCount++;
                         }
                     }
                 }
             }
-
+            return postCount;
         }
     }
 }

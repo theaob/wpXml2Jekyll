@@ -19,8 +19,6 @@ namespace wpXml2Jekyll
             _postWriter = new PostWriter();
         }
 
-        
-
         public PostWriter PostWriter
         {
             get { return _postWriter; }
@@ -28,8 +26,6 @@ namespace wpXml2Jekyll
 
         private void button1_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Clear();
-
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Wordpress Output (.xml)|*.xml";
             openFileDialog1.ShowDialog();
@@ -42,12 +38,6 @@ namespace wpXml2Jekyll
             xmlDocument = new PostImporter().ReadWpPosts(openFileDialog1.FileName);
         }
 
-
-        private void add2List(String addThis)
-        {
-            listBox1.Items.Add(addThis);
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             folderBrowserDialog1.ShowDialog();
@@ -57,7 +47,9 @@ namespace wpXml2Jekyll
                 return;
             }
 
-            PostWriter.WritePostToMarkdown(xmlDocument, folderBrowserDialog1.SelectedPath);
+            var postCount = PostWriter.WritePostToMarkdown(xmlDocument, folderBrowserDialog1.SelectedPath);
+
+            MessageBox.Show("Saved " + postCount + " posts");
         }
     }
 }
