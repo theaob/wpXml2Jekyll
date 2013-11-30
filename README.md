@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status?id=dxg73fkekcl49r80)](https://ci.appveyor.com/project/wpxml2jekyll)
+
 ## What is wpXml2Jekyll
 
 wpXml2Jekyll is a tool that converts your Wordpress XML file to individual [Jekyll](https://github.com/mojombo/jekyll) &amp; [Octopress](https://github.com/imathis/octopress/) compatible markdown posts.
