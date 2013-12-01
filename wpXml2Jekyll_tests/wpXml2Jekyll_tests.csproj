@@ -52,6 +52,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AcceptanceTests.SimpleWordPressXmlFileConvertionHelloWorldPost.approved.md" />
+    <None Include="AcceptanceTests.SimpleWordPressXmlFileConvertionLoremIpsumPost.approved.md" />
+    <None Include="AcceptanceTests.SimpleWordPressXmlFileConvertionSamplePagePost.approved.md" />
+    <None Include="AcceptanceTests.SimpleWordPressXmlFileConvertionTestPost.approved.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
