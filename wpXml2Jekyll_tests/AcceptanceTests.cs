@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using ApprovalTests;
 using ApprovalTests.Reporters;
-using ApprovalUtilities.SimpleLogger.Writers;
 using NUnit.Framework;
 using wpXml2Jekyll;
 
@@ -22,12 +16,48 @@ namespace wpXml2Jekyll_tests
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SimpleWordPressXmlFileConvertion()
+        public void SimpleWordPressXmlFileConvertionHelloWorldPost()
         {
             var wordpressXmlFilePath = @"..\..\exporttest.wordpress.2013-11-17.xml";
             var outputfolderPath = @".\";
             Program.Main(new[] { wordpressXmlFilePath, outputfolderPath });
             var outputFileName = string.Format(".\\{0}.md", helloWorldPost);
+            var outputFileFullPath = outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
+            Approvals.VerifyFile(outputFileFullPath);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SimpleWordPressXmlFileConvertionLoremIpsumPost()
+        {
+            var wordpressXmlFilePath = @"..\..\exporttest.wordpress.2013-11-17.xml";
+            var outputfolderPath = @".\";
+            Program.Main(new[] { wordpressXmlFilePath, outputfolderPath });
+            var outputFileName = string.Format(".\\{0}.md", loremIpsumPost);
+            var outputFileFullPath = outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
+            Approvals.VerifyFile(outputFileFullPath);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SimpleWordPressXmlFileConvertionSamplePagePost()
+        {
+            var wordpressXmlFilePath = @"..\..\exporttest.wordpress.2013-11-17.xml";
+            var outputfolderPath = @".\";
+            Program.Main(new[] { wordpressXmlFilePath, outputfolderPath });
+            var outputFileName = string.Format(".\\{0}.md", samplePagePost);
+            var outputFileFullPath = outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
+            Approvals.VerifyFile(outputFileFullPath);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SimpleWordPressXmlFileConvertionTestPost()
+        {
+            var wordpressXmlFilePath = @"..\..\exporttest.wordpress.2013-11-17.xml";
+            var outputfolderPath = @".\";
+            Program.Main(new[] { wordpressXmlFilePath, outputfolderPath });
+            var outputFileName = string.Format(".\\{0}.md", testPost);
             var outputFileFullPath = outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
             Approvals.VerifyFile(outputFileFullPath);
         }
