@@ -1,7 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpXml2Jekyll", "wpXml2Jekyll\wpXml2Jekyll.csproj", "{667FCA6E-6534-4EB3-AB18-7A829D7B3D46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpXml2Jekyll_tests", "wpXml2Jekyll_tests\wpXml2Jekyll_tests.csproj", "{39A923B5-B351-42AA-A10A-7FF40E66F638}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +17,10 @@ Global
 		{667FCA6E-6534-4EB3-AB18-7A829D7B3D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{667FCA6E-6534-4EB3-AB18-7A829D7B3D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{667FCA6E-6534-4EB3-AB18-7A829D7B3D46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39A923B5-B351-42AA-A10A-7FF40E66F638}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39A923B5-B351-42AA-A10A-7FF40E66F638}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39A923B5-B351-42AA-A10A-7FF40E66F638}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39A923B5-B351-42AA-A10A-7FF40E66F638}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ApprovalUtilities</id>
+    <version>3.0.5</version>
+    <authors>Llewellyn Falco &amp; Dan Gilkerson</authors>
+    <owners>Llewellyn Falco &amp; Dan Gilkerson</owners>
+    <projectUrl>https://github.com/approvals/ApprovalTests.Net</projectUrl>
+    <iconUrl>http://approvaltests.sourceforge.net/sites/all/themes/corolla/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Common helper classes developed with ApprovalTests</description>
+    <language>en-US</language>
+  </metadata>
+</package>

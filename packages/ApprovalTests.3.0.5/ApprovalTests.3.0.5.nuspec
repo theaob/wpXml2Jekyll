@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>ApprovalTests</id>
+    <version>3.0.5</version>
+    <title>ApprovalTests</title>
+    <authors>Llewellyn Falco &amp; Dan Gilkerson</authors>
+    <owners>Llewellyn Falco &amp; Dan Gilkerson</owners>
+    <projectUrl>https://github.com/approvals/ApprovalTests.Net</projectUrl>
+    <iconUrl>http://approvaltests.sourceforge.net/sites/all/themes/corolla/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A picture's worth a 1000 tests.
+         Unit testing asserts can be difficult to use. 
+		 Approval tests simplify this by taking a snapshot of the results, 
+		 and confirming that they have not changed.</description>
+    <releaseNotes />
+    <copyright />
+    <language>en-US</language>
+    <dependencies>
+      <group targetFramework=".NETFramework3.5">
+        <dependency id="ApprovalUtilities" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
