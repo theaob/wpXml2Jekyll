@@ -9,20 +9,20 @@ namespace wpXml2Jekyll_tests
     [TestFixture]
     class AcceptanceTests
     {
-        private string helloWorldPost = "2013-11-02-hello-world";
-        private string loremIpsumPost = "2013-11-02-lorem-ipsum";
-        private string samplePagePost = "2013-11-02-sample-page";
-        private string testPost = "2013-11-02-Test";
+        private readonly string _helloWorldPost = "2013-11-02-hello-world";
+        private readonly string _loremIpsumPost = "2013-11-02-lorem-ipsum";
+        private readonly string _samplePagePost = "2013-11-02-sample-page";
+        private readonly string _testPost = "2013-11-02-Test";
+        private readonly string _wordpressXmlFilePath = @"..\..\exporttest.wordpress.2013-11-17.xml";
+        private readonly string _outputfolderPath = @".\";
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SimpleWordPressXmlFileConvertionHelloWorldPost()
         {
-            var wordpressXmlFilePath = @"..\..\exporttest.wordpress.2013-11-17.xml";
-            var outputfolderPath = @".\";
-            Program.Main(new[] { wordpressXmlFilePath, outputfolderPath });
-            var outputFileName = string.Format(".\\{0}.md", helloWorldPost);
-            var outputFileFullPath = outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
+            Program.Main(new[] { _wordpressXmlFilePath, _outputfolderPath });
+            var outputFileName = string.Format(".\\{0}.md", _helloWorldPost);
+            var outputFileFullPath = _outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
             Approvals.VerifyFile(outputFileFullPath);
         }
 
@@ -30,11 +30,9 @@ namespace wpXml2Jekyll_tests
         [UseReporter(typeof(DiffReporter))]
         public void SimpleWordPressXmlFileConvertionLoremIpsumPost()
         {
-            var wordpressXmlFilePath = @"..\..\exporttest.wordpress.2013-11-17.xml";
-            var outputfolderPath = @".\";
-            Program.Main(new[] { wordpressXmlFilePath, outputfolderPath });
-            var outputFileName = string.Format(".\\{0}.md", loremIpsumPost);
-            var outputFileFullPath = outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
+            Program.Main(new[] { _wordpressXmlFilePath, _outputfolderPath });
+            var outputFileName = string.Format(".\\{0}.md", _loremIpsumPost);
+            var outputFileFullPath = _outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
             Approvals.VerifyFile(outputFileFullPath);
         }
 
@@ -42,11 +40,9 @@ namespace wpXml2Jekyll_tests
         [UseReporter(typeof(DiffReporter))]
         public void SimpleWordPressXmlFileConvertionSamplePagePost()
         {
-            var wordpressXmlFilePath = @"..\..\exporttest.wordpress.2013-11-17.xml";
-            var outputfolderPath = @".\";
-            Program.Main(new[] { wordpressXmlFilePath, outputfolderPath });
-            var outputFileName = string.Format(".\\{0}.md", samplePagePost);
-            var outputFileFullPath = outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
+            Program.Main(new[] { _wordpressXmlFilePath, _outputfolderPath });
+            var outputFileName = string.Format(".\\{0}.md", _samplePagePost);
+            var outputFileFullPath = _outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
             Approvals.VerifyFile(outputFileFullPath);
         }
 
@@ -54,11 +50,9 @@ namespace wpXml2Jekyll_tests
         [UseReporter(typeof(DiffReporter))]
         public void SimpleWordPressXmlFileConvertionTestPost()
         {
-            var wordpressXmlFilePath = @"..\..\exporttest.wordpress.2013-11-17.xml";
-            var outputfolderPath = @".\";
-            Program.Main(new[] { wordpressXmlFilePath, outputfolderPath });
-            var outputFileName = string.Format(".\\{0}.md", testPost);
-            var outputFileFullPath = outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
+            Program.Main(new[] { _wordpressXmlFilePath, _outputfolderPath });
+            var outputFileName = string.Format(".\\{0}.md", _testPost);
+            var outputFileFullPath = _outputfolderPath + Path.DirectorySeparatorChar + outputFileName;
             Approvals.VerifyFile(outputFileFullPath);
         }
     }
