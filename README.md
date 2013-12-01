@@ -1,6 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status?id=dxg73fkekcl49r80)](https://ci.appveyor.com/project/wpxml2jekyll)
-
-## What is wpXml2Jekyll
+## What is wpXml2Jekyll?
 
 wpXml2Jekyll is a tool that converts your Wordpress XML file to individual [Jekyll](https://github.com/mojombo/jekyll) &amp; [Octopress](https://github.com/imathis/octopress/) compatible markdown posts.
 
@@ -10,7 +8,7 @@ wpXml2Jekyll is a tool that converts your Wordpress XML file to individual [Jeky
 
 ## Usage
 
-You can download wpXml2Jekyll v1.2 from [here](https://github.com/theaob/wpXml2Jekyll/raw/v1.2/wpXml2Jekyll.exe) as a compiled binary. You can run the executable as a windows application or run it on console as:
+You can download wpXml2Jekyll v1.2 from [here](https://github.com/theaob/wpXml2Jekyll/raw/v1.2/wpXml2Jekyll.exe) as a compiled binary or for the [**releases** section](https://github.com/theaob/wpXml2Jekyll/releases). You can run the executable as a windows application or run it on console as:
 ```
 wpXml2Jekyll [wordpress export file] [output folder]
 ```
@@ -18,9 +16,9 @@ wpXml2Jekyll [wordpress export file] [output folder]
 
 It may **look** weird but it is actually very self explanatory.
 
-## Don't Want To Compile?
+## Build Status
 
-Head over to the **Downloads** section to download the binary
+[![Build status](https://ci.appveyor.com/api/projects/status?id=dxg73fkekcl49r80)](https://ci.appveyor.com/project/wpxml2jekyll)
 
 ## Contributing
 
