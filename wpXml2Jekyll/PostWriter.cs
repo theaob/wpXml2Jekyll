@@ -33,9 +33,12 @@ namespace wpXml2Jekyll
 
                         var categories = item.SelectNodes("category", namespaceManager);
 
+                        String postStatus = item.SelectSingleNode("wp:status", namespaceManager).InnerText;
+                        var folderPath = AppendStatusToOutputFolder(outputFolder, postStatus);
+
                         using (
                             TextWriter tw =
-                                new StreamWriter(outputFolder + Path.DirectorySeparatorChar +
+                                new StreamWriter(folderPath + Path.DirectorySeparatorChar +
                                                  p.date.ToString("yyyy-MM-dd-") + p.url + ".md"))
                         {
                             tw.WriteLine("---");
@@ -63,6 +66,20 @@ namespace wpXml2Jekyll
                 }
             }
             return postCount;
+        }
+
+        private static string AppendStatusToOutputFolder(string outputFolder, string postStatus)
+        {
+            String folderPath = outputFolder;
+            if (!String.IsNullOrWhiteSpace(postStatus))
+            {
+                folderPath = outputFolder + Path.DirectorySeparatorChar + postStatus;
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+            }
+            return folderPath;
         }
     }
 }
