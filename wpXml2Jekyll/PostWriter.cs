@@ -35,6 +35,7 @@ namespace wpXml2Jekyll
 
                         String postStatus = item.SelectSingleNode("wp:status", namespaceManager).InnerText;
                         var folderPath = AppendStatusToOutputFolder(outputFolder, postStatus);
+                        CreateDirectoryIfDoesntExist(folderPath);
 
                         using (
                             TextWriter tw =
@@ -68,16 +69,20 @@ namespace wpXml2Jekyll
             return postCount;
         }
 
+        private static void CreateDirectoryIfDoesntExist(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+        }
+
         private static string AppendStatusToOutputFolder(string outputFolder, string postStatus)
         {
             String folderPath = outputFolder;
             if (!String.IsNullOrWhiteSpace(postStatus))
             {
                 folderPath = outputFolder + Path.DirectorySeparatorChar + postStatus;
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
             }
             return folderPath;
         }
