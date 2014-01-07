@@ -7,13 +7,13 @@ using wpXml2Jekyll.Properties;
 
 namespace wpXml2Jekyll
 {
-    static class Program
+    public static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             if (args.Length == 0)
             {
