@@ -14,8 +14,8 @@ namespace wpXml2JekyllTests
     public class TestPostImporter
     {
         private readonly string _xmlPath = @"..\..\exporttest.wordpress.2013-11-17.xml";
-        private readonly string _falseDirectoryPath = @".\findthis\ifyou\can.xml";
-        private readonly string _falseFilePath = @".\findthisifyoucan.xml";
+        private readonly string _falseDirectoryPath = @"findthis\ifyou\can.xml";
+        private readonly string _falseFilePath = @"findthisifyoucan.xml";
         private PostImporter postImporter;
         private XmlDocument realDocument;
 
@@ -32,7 +32,7 @@ namespace wpXml2JekyllTests
         {
 
             XmlDocument importedDocument = postImporter.ReadWpPosts(_xmlPath);
-            Assert.AreEqual(realDocument, importedDocument);
+            Assert.AreEqual(realDocument, importedDocument, "Imported document was different than expected.");
 
         }
 
@@ -41,6 +41,7 @@ namespace wpXml2JekyllTests
         public void PostImportDirectoryNotFoundException()
         {
             XmlDocument falsePathDocument = postImporter.ReadWpPosts(_falseDirectoryPath);
+            Console.WriteLine(_falseDirectoryPath);
         }
 
         [Test]
