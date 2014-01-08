@@ -14,8 +14,8 @@ namespace wpXml2JekyllTests
     public class TestPostImporter
     {
         private readonly string _xmlPath = @"..\..\exporttest.wordpress.2013-11-17.xml";
-        private readonly string _falseDirectoryPath = "C:\\findthis\\ifyou\\can.xml";
-        private readonly string _falseFilePath = "C:\\findthisifyoucan.xml";
+        private readonly string _falseDirectoryPath = @".\findthis\ifyou\can.xml";
+        private readonly string _falseFilePath = @".\findthisifyoucan.xml";
         private PostImporter postImporter;
         private XmlDocument realDocument;
 
