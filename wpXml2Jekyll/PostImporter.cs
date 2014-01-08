@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace wpXml2Jekyll
 {
-    class PostImporter
+    public class PostImporter
     {
         public XmlDocument ReadWpPosts(string fileName)
         {

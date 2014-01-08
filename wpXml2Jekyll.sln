@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpXml2Jekyll", "wpXml2Jekyll\wpXml2Jekyll.csproj", "{667FCA6E-6534-4EB3-AB18-7A829D7B3D46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpXml2JekyllTests", "wpXml2JekyllTests\wpXml2JekyllTests.csproj", "{E8803EBF-2F48-47FA-AA6D-6FD5C9B1F501}"
+	ProjectSection(ProjectDependencies) = postProject
+		{667FCA6E-6534-4EB3-AB18-7A829D7B3D46} = {667FCA6E-6534-4EB3-AB18-7A829D7B3D46}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
