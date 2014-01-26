@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Html2Markdown</id>
+    <version>0.0.1.11272</version>
+    <title>Html2Markdown</title>
+    <authors>Simon Baynes</authors>
+    <owners>Simon Baynes</owners>
+    <projectUrl>https://github.com/baynezy/Html2Markdown</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A library for converting HTML to markdown syntax in C#</description>
+    <releaseNotes />
+    <copyright>Copyright 2013</copyright>
+    <language />
+    <tags>Markdown Html Convert</tags>
+  </metadata>
+</package>

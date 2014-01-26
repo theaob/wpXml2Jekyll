@@ -8,6 +8,8 @@ namespace wpXml2Jekyll
 {
     public class PostWriter
     {
+        Html2Markdown.Converter converter = new Html2Markdown.Converter();
+
         private readonly String _postTypeAttachment = "attachment";
 
         public int WritePostToMarkdown(XmlDocument xmlDocumentToWrite, string outputFolder)
@@ -60,7 +62,7 @@ namespace wpXml2Jekyll
                             }
                             tw.WriteLine("]");
                             tw.WriteLine("---");
-                            tw.WriteLine(p.content);
+                            tw.WriteLine(converter.Convert(p.content));
                             postCount++;
                         }
                     }
