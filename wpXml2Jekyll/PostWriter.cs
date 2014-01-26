@@ -33,7 +33,8 @@ namespace wpXml2Jekyll
                         var p = new Post(item.SelectSingleNode("title").InnerText, item.SelectSingleNode("wp:post_date", namespaceManager).InnerText, item.SelectSingleNode("content:encoded", namespaceManager).InnerText,
                              item.SelectSingleNode("wp:post_name", namespaceManager).InnerText, item.SelectSingleNode("dc:creator", namespaceManager).InnerText);
 
-                        var categories = item.SelectNodes("category", namespaceManager);
+                        var categories = item.SelectNodes("category[@domain='category']", namespaceManager);
+                        var tags = item.SelectNodes("category[@domain='post_tag']", namespaceManager);
 
                         String postStatus = item.SelectSingleNode("wp:status", namespaceManager).InnerText;
                         var folderPath = AppendStatusToOutputFolder(outputFolder, postStatus);
@@ -56,6 +57,16 @@ namespace wpXml2Jekyll
                             {
                                 tw.Write(categories[i].InnerText);
                                 if (i + 1 < categories.Count)
+                                {
+                                    tw.Write(", ");
+                                }
+                            }
+                            tw.WriteLine("]");
+                            tw.Write("tags: [");
+                            for (int i = 0; i < tags.Count; i++)
+                            {
+                                tw.Write(tags[i].InnerText);
+                                if (i + 1 < tags.Count)
                                 {
                                     tw.Write(", ");
                                 }
