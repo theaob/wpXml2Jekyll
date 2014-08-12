@@ -46,7 +46,7 @@ namespace wpXml2Jekyll
                             tw.WriteLine("---");
                             tw.Write("layout: ");
                             tw.WriteLine(postType);//different layout for pages
-                            tw.WriteLine("title: " + p.title);
+                            tw.WriteLine("title: \"" + p.title + "\"");
                             tw.WriteLine("date: " + p.date.ToString("yyyy-MM-dd HH:mm"));
                             tw.WriteLine("author: " + p.author);
                             tw.WriteLine("comments: true");
