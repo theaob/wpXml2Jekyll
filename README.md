@@ -18,7 +18,7 @@ It may **look** weird but it is actually very self explanatory.
 
 ## Build Status
 
-[![Build status](https://ci.appveyor.com/api/projects/status?id=dxg73fkekcl49r80)](https://ci.appveyor.com/project/wpxml2jekyll)
+[![Build status](https://ci.appveyor.com/api/projects/status/dxg73fkekcl49r80)](https://ci.appveyor.com/project/theaob/wpxml2jekyll)
 
 ## Contributing
 
