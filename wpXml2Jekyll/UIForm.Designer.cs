@@ -33,6 +33,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.checkBoxExtractImages = new System.Windows.Forms.CheckBox();
+            this.checkBoxConvertToMarkdown = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button1
@@ -69,11 +70,22 @@
             this.checkBoxExtractImages.Text = "Extract images";
             this.checkBoxExtractImages.UseVisualStyleBackColor = true;
             // 
+            // checkBoxConvertToMarkdown
+            // 
+            this.checkBoxConvertToMarkdown.AutoSize = true;
+            this.checkBoxConvertToMarkdown.Location = new System.Drawing.Point(12, 35);
+            this.checkBoxConvertToMarkdown.Name = "checkBoxConvertToMarkdown";
+            this.checkBoxConvertToMarkdown.Size = new System.Drawing.Size(128, 17);
+            this.checkBoxConvertToMarkdown.TabIndex = 4;
+            this.checkBoxConvertToMarkdown.Text = "Convert to Markdown";
+            this.checkBoxConvertToMarkdown.UseVisualStyleBackColor = true;
+            // 
             // UIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(180, 168);
+            this.Controls.Add(this.checkBoxConvertToMarkdown);
             this.Controls.Add(this.checkBoxExtractImages);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -94,6 +106,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private readonly PostImporter _postImporter = new PostImporter();
         private System.Windows.Forms.CheckBox checkBoxExtractImages;
+        private System.Windows.Forms.CheckBox checkBoxConvertToMarkdown;
     }
 }
 

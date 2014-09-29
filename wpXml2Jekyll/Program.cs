@@ -25,12 +25,14 @@ namespace wpXml2Jekyll
                 var wordpressXmlFile = "";
                 var outputFolder = "";
                 var images = false;
+                var convertToMarkdown = false;
 
                 var optionSet = new OptionSet
                     {
                         {"i|input=", "WordPress export file", v => wordpressXmlFile = v},
                         {"o|output=", "Output folder", v => outputFolder = v},
                         {"images", "Extract images from posts", v => images = v != null},
+                        {"markdown", "Convert posts' content to Markdown (requires Pandoc [http://johnmacfarlane.net/pandoc/] to be installed)", v => convertToMarkdown = v != null},
                     };
 
                 var extras = optionSet.Parse(args);
@@ -42,7 +44,7 @@ namespace wpXml2Jekyll
                 
 
                 var posts = new PostImporter().ReadWpPosts(wordpressXmlFile);
-                int count = new PostWriter(images).WritePostToMarkdown(posts, outputFolder);
+                int count = new PostWriter(images, convertToMarkdown).WritePostToMarkdown(posts, outputFolder);
 
                 Console.WriteLine("Saved " + count + " posts");
             }

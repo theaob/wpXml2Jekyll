@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Xml;
 using HtmlAgilityPack;
 
@@ -11,13 +13,15 @@ namespace wpXml2Jekyll
     public class PostWriter
     {
         private readonly bool _extractImages;
+        private readonly bool _convertToMarkdown;
         private readonly String _postTypeAttachment = "attachment";
 
-        private List<Uri> images = new List<Uri>();
+        private readonly List<Uri> _images = new List<Uri>();
 
-        public PostWriter(bool extractImages)
+        public PostWriter(bool extractImages, bool convertToMarkdown)
         {
             _extractImages = extractImages;
+            _convertToMarkdown = convertToMarkdown;
         }
 
         public int WritePostToMarkdown(XmlDocument xmlDocumentToWrite, string outputFolder)
@@ -118,7 +122,7 @@ namespace wpXml2Jekyll
 
             var webClient = new WebClient();
 
-            foreach (var image in images.Distinct())
+            foreach (var image in _images.Distinct())
             {
                 var imageUri = image;
                 var filename = imageUri.Segments[imageUri.Segments.Length - 1];
@@ -163,16 +167,55 @@ namespace wpXml2Jekyll
                     if (!imageUri.IsAbsoluteUri)
                         continue;
 
-                    images.Add(imageUri);
+                    _images.Add(imageUri);
 
                     var filename = imageUri.Segments[imageUri.Segments.Length - 1];
 
                     img.SetAttributeValue("src", "{{ site.url }}/images/" + filename);
                 }
 
-                return doc.DocumentNode.OuterHtml;
+                html = doc.DocumentNode.OuterHtml;
             }
+            if (_convertToMarkdown)
+                html = Convert(html);
+
             return html;
+        }
+
+        public string Convert(string source)
+        {
+            const string processName = @"%LOCALAPPDATA%\Pandoc\pandoc.exe";
+            if (!File.Exists(processName))
+            {
+                Console.WriteLine("Cannot convert to Markdown - Pandoc executable was not found at: " + processName);
+                return source;
+            }
+
+            string args = String.Format(@"-r html -t markdown_github --no-wrap");
+
+            var psi = new ProcessStartInfo(processName, args)
+            {
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true
+            };
+
+            var p = new Process { StartInfo = psi };
+            psi.UseShellExecute = false;
+            p.Start();
+
+            string outputString;
+            byte[] inputBuffer = Encoding.UTF8.GetBytes(source);
+            p.StandardInput.BaseStream.Write(inputBuffer, 0, inputBuffer.Length);
+            p.StandardInput.Close();
+
+            System.Threading.Thread.Sleep(1000);
+            using (var sr = new StreamReader(p.StandardOutput.BaseStream))
+            {
+                outputString = sr.ReadToEnd();
+            }
+
+
+            return outputString;
         }
     }
 }

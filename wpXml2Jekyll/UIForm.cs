@@ -37,7 +37,7 @@ namespace wpXml2Jekyll
                 return;
             }
 
-            var postWriter = new PostWriter(checkBoxExtractImages.Checked);
+            var postWriter = new PostWriter(checkBoxExtractImages.Checked, checkBoxConvertToMarkdown.Checked);
             var postCount = postWriter.WritePostToMarkdown(_xmlDocument, folderBrowserDialog1.SelectedPath);
 
             MessageBox.Show("Saved " + postCount + " posts");
