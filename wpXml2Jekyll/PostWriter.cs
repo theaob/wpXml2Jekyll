@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using HtmlAgilityPack;
 
 namespace wpXml2Jekyll
 {
     public class PostWriter
     {
         private readonly String _postTypeAttachment = "attachment";
+
+        private List<Uri> images = new List<Uri>();
 
         public int WritePostToMarkdown(XmlDocument xmlDocumentToWrite, string outputFolder)
         {
@@ -96,6 +99,36 @@ namespace wpXml2Jekyll
                 folderPath = outputFolder + Path.DirectorySeparatorChar + postStatus;
             }
             return folderPath;
+        }
+
+        public string Process(string html)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            foreach (var img in doc.DocumentNode.Descendants("img").ToList())
+            {
+                var src = img.GetAttributeValue("src", null);
+                var width = img.GetAttributeValue("width", 0);
+                var height = img.GetAttributeValue("height", 0);
+                if (string.IsNullOrEmpty(src) || width <= 1 || height <= 1)
+                {
+                    img.Remove();
+                    continue;
+                }
+
+                Uri imageUri = new Uri(src, UriKind.RelativeOrAbsolute);
+                if (!imageUri.IsAbsoluteUri)
+                    continue;
+
+                images.Add(imageUri);
+
+                var filename = imageUri.Segments[imageUri.Segments.Length - 1];
+
+                img.SetAttributeValue("src", "{{ site.url }}/images/" + filename);
+            }
+
+            return doc.DocumentNode.OuterHtml;
         }
     }
 }
