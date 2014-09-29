@@ -1,27 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
 using System.Xml;
 
 namespace wpXml2Jekyll
 {
     public partial class UIForm : Form
     {
-        private XmlDocument xmlDocument;
-        private readonly PostWriter _postWriter;
+        private XmlDocument _xmlDocument;
 
         public UIForm()
         {
             InitializeComponent();
-            _postWriter = new PostWriter();
-        }
-
-        public PostWriter PostWriter
-        {
-            get { return _postWriter; }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,7 +24,8 @@ namespace wpXml2Jekyll
                 return;
             }
 
-            xmlDocument = new PostImporter().ReadWpPosts(openFileDialog1.FileName);
+            var postImporter = new PostImporter();
+            _xmlDocument = postImporter.ReadWpPosts(openFileDialog1.FileName);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -47,7 +37,8 @@ namespace wpXml2Jekyll
                 return;
             }
 
-            var postCount = PostWriter.WritePostToMarkdown(xmlDocument, folderBrowserDialog1.SelectedPath);
+            var postWriter = new PostWriter(checkBoxExtractImages.Checked, checkBoxConvertToMarkdown.Checked);
+            var postCount = postWriter.WritePostToMarkdown(_xmlDocument, folderBrowserDialog1.SelectedPath);
 
             MessageBox.Show("Saved " + postCount + " posts");
         }

@@ -1,14 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Xml;
+using HtmlAgilityPack;
 
 namespace wpXml2Jekyll
 {
     public class PostWriter
     {
+        private readonly bool _extractImages;
+        private readonly bool _convertToMarkdown;
         private readonly String _postTypeAttachment = "attachment";
+
+        private readonly List<Uri> _images = new List<Uri>();
+
+        public PostWriter(bool extractImages, bool convertToMarkdown)
+        {
+            _extractImages = extractImages;
+            _convertToMarkdown = convertToMarkdown;
+        }
 
         public int WritePostToMarkdown(XmlDocument xmlDocumentToWrite, string outputFolder)
         {
@@ -77,6 +91,9 @@ namespace wpXml2Jekyll
                     }
                 }
             }
+
+            DownloadImages(outputFolder);
+
             return postCount;
         }
 
@@ -96,6 +113,109 @@ namespace wpXml2Jekyll
                 folderPath = outputFolder + Path.DirectorySeparatorChar + postStatus;
             }
             return folderPath;
+        }
+
+        private void DownloadImages(string outputFolder)
+        {
+            var folderPath = AppendStatusToOutputFolder(outputFolder, "images");
+            CreateDirectoryIfDoesntExist(folderPath);
+
+            var webClient = new WebClient();
+
+            foreach (var image in _images.Distinct())
+            {
+                var imageUri = image;
+                var filename = imageUri.Segments[imageUri.Segments.Length - 1];
+                if (!string.IsNullOrEmpty(imageUri.Query))
+                {
+                    var nvc = imageUri.Query.TrimStart('?').ToNameValueCollection();
+                    nvc.Remove("w");
+                    nvc.Remove("h");
+                    nvc.Remove("width");
+                    nvc.Remove("height");
+
+                    var x = new UriBuilder(imageUri) {Query = nvc.ToQueryString(false)};
+
+                    imageUri = x.Uri;
+                }
+
+                webClient.DownloadFile(imageUri, Path.Combine(folderPath, filename));
+            }
+        }
+
+
+        public string Process(string html)
+        {
+            if (_extractImages)
+            {
+                var doc = new HtmlDocument();
+                doc.LoadHtml(html);
+
+                foreach (var img in doc.DocumentNode.Descendants("img").ToList())
+                {
+                    var src = img.GetAttributeValue("src", null);
+                    var width = img.GetAttributeValue("width", 0);
+                    var height = img.GetAttributeValue("height", 0);
+                    if (string.IsNullOrEmpty(src) || width <= 1 || height <= 1) 
+                    {
+                        // remove empty images, or images that are too small to see
+                        img.Remove();
+                        continue;
+                    }
+
+                    Uri imageUri = new Uri(src, UriKind.RelativeOrAbsolute);
+                    if (!imageUri.IsAbsoluteUri)
+                        continue;
+
+                    _images.Add(imageUri);
+
+                    var filename = imageUri.Segments[imageUri.Segments.Length - 1];
+
+                    img.SetAttributeValue("src", "{{ site.url }}/images/" + filename);
+                }
+
+                html = doc.DocumentNode.OuterHtml;
+            }
+            if (_convertToMarkdown)
+                html = Convert(html);
+
+            return html;
+        }
+
+        public string Convert(string source)
+        {
+            const string processName = @"%LOCALAPPDATA%\Pandoc\pandoc.exe";
+            if (!File.Exists(processName))
+            {
+                Console.WriteLine("Cannot convert to Markdown - Pandoc executable was not found at: " + processName);
+                return source;
+            }
+
+            string args = String.Format(@"-r html -t markdown_github --no-wrap");
+
+            var psi = new ProcessStartInfo(processName, args)
+            {
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true
+            };
+
+            var p = new Process { StartInfo = psi };
+            psi.UseShellExecute = false;
+            p.Start();
+
+            string outputString;
+            byte[] inputBuffer = Encoding.UTF8.GetBytes(source);
+            p.StandardInput.BaseStream.Write(inputBuffer, 0, inputBuffer.Length);
+            p.StandardInput.Close();
+
+            System.Threading.Thread.Sleep(1000);
+            using (var sr = new StreamReader(p.StandardOutput.BaseStream))
+            {
+                outputString = sr.ReadToEnd();
+            }
+
+
+            return outputString;
         }
     }
 }
