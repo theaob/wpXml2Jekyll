@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using wpXml2Jekyll.Properties;
+using NDesk.Options;
 
 namespace wpXml2Jekyll
 {
@@ -24,19 +22,38 @@ namespace wpXml2Jekyll
             }
             else
             {
-                if (args.Length != 2)
+                var wordpressXmlFile = "";
+                var outputFolder = "";
+
+                var optionSet = new OptionSet
+                    {
+                        {"i|input=", "WordPress export file", v => wordpressXmlFile = v},
+                        {"o|output=", "Output folder", v => outputFolder = v},
+                    };
+
+                var extras = optionSet.Parse(args);
+                if (string.IsNullOrEmpty(wordpressXmlFile) || string.IsNullOrEmpty(outputFolder))
                 {
-                    Console.WriteLine("Usage: wpXml2Jekyll [wordpress export file] [output folder]");
-                    Environment.Exit(1);
+                    ShowHelp(optionSet);
+                    return;
                 }
-                var wordpressXmlFile = args[0];
-                var outputFolder = args[1];
+                
 
                 var posts = new PostImporter().ReadWpPosts(wordpressXmlFile);
                 int count = new PostWriter().WritePostToMarkdown(posts, outputFolder);
+
                 Console.WriteLine("Saved " + count + " posts");
             }
         }
+
+        static void ShowHelp(OptionSet p)
+        {
+            Console.WriteLine("Usage: wpXml2Jekyll -input=<input_file> -output=<output_folder> [OPTIONS]");
+            Console.WriteLine();
+            Console.WriteLine("Options:");
+            p.WriteOptionDescriptions(Console.Out);
+        }
+
 
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern int FreeConsole();
