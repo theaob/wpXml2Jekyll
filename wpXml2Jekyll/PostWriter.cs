@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Xml;
 using HtmlAgilityPack;
 
@@ -9,9 +10,15 @@ namespace wpXml2Jekyll
 {
     public class PostWriter
     {
+        private readonly bool _extractImages;
         private readonly String _postTypeAttachment = "attachment";
 
         private List<Uri> images = new List<Uri>();
+
+        public PostWriter(bool extractImages)
+        {
+            _extractImages = extractImages;
+        }
 
         public int WritePostToMarkdown(XmlDocument xmlDocumentToWrite, string outputFolder)
         {
@@ -80,6 +87,9 @@ namespace wpXml2Jekyll
                     }
                 }
             }
+
+            DownloadImages(outputFolder);
+
             return postCount;
         }
 
@@ -101,34 +111,68 @@ namespace wpXml2Jekyll
             return folderPath;
         }
 
-        public string Process(string html)
+        private void DownloadImages(string outputFolder)
         {
-            var doc = new HtmlDocument();
-            doc.LoadHtml(html);
+            var folderPath = AppendStatusToOutputFolder(outputFolder, "images");
+            CreateDirectoryIfDoesntExist(folderPath);
 
-            foreach (var img in doc.DocumentNode.Descendants("img").ToList())
+            var webClient = new WebClient();
+
+            foreach (var image in images.Distinct())
             {
-                var src = img.GetAttributeValue("src", null);
-                var width = img.GetAttributeValue("width", 0);
-                var height = img.GetAttributeValue("height", 0);
-                if (string.IsNullOrEmpty(src) || width <= 1 || height <= 1)
+                var imageUri = image;
+                var filename = imageUri.Segments[imageUri.Segments.Length - 1];
+                if (!string.IsNullOrEmpty(imageUri.Query))
                 {
-                    img.Remove();
-                    continue;
+                    var nvc = imageUri.Query.TrimStart('?').ToNameValueCollection();
+                    nvc.Remove("w");
+                    nvc.Remove("h");
+                    nvc.Remove("width");
+                    nvc.Remove("height");
+
+                    var x = new UriBuilder(imageUri) {Query = nvc.ToQueryString(false)};
+
+                    imageUri = x.Uri;
                 }
 
-                Uri imageUri = new Uri(src, UriKind.RelativeOrAbsolute);
-                if (!imageUri.IsAbsoluteUri)
-                    continue;
-
-                images.Add(imageUri);
-
-                var filename = imageUri.Segments[imageUri.Segments.Length - 1];
-
-                img.SetAttributeValue("src", "{{ site.url }}/images/" + filename);
+                webClient.DownloadFile(imageUri, Path.Combine(folderPath, filename));
             }
+        }
 
-            return doc.DocumentNode.OuterHtml;
+
+        public string Process(string html)
+        {
+            if (_extractImages)
+            {
+                var doc = new HtmlDocument();
+                doc.LoadHtml(html);
+
+                foreach (var img in doc.DocumentNode.Descendants("img").ToList())
+                {
+                    var src = img.GetAttributeValue("src", null);
+                    var width = img.GetAttributeValue("width", 0);
+                    var height = img.GetAttributeValue("height", 0);
+                    if (string.IsNullOrEmpty(src) || width <= 1 || height <= 1) 
+                    {
+                        // remove empty images, or images that are too small to see
+                        img.Remove();
+                        continue;
+                    }
+
+                    Uri imageUri = new Uri(src, UriKind.RelativeOrAbsolute);
+                    if (!imageUri.IsAbsoluteUri)
+                        continue;
+
+                    images.Add(imageUri);
+
+                    var filename = imageUri.Segments[imageUri.Segments.Length - 1];
+
+                    img.SetAttributeValue("src", "{{ site.url }}/images/" + filename);
+                }
+
+                return doc.DocumentNode.OuterHtml;
+            }
+            return html;
         }
     }
 }

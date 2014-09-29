@@ -24,11 +24,13 @@ namespace wpXml2Jekyll
             {
                 var wordpressXmlFile = "";
                 var outputFolder = "";
+                var images = false;
 
                 var optionSet = new OptionSet
                     {
                         {"i|input=", "WordPress export file", v => wordpressXmlFile = v},
                         {"o|output=", "Output folder", v => outputFolder = v},
+                        {"images", "Extract images from posts", v => images = v != null},
                     };
 
                 var extras = optionSet.Parse(args);
@@ -40,7 +42,7 @@ namespace wpXml2Jekyll
                 
 
                 var posts = new PostImporter().ReadWpPosts(wordpressXmlFile);
-                int count = new PostWriter().WritePostToMarkdown(posts, outputFolder);
+                int count = new PostWriter(images).WritePostToMarkdown(posts, outputFolder);
 
                 Console.WriteLine("Saved " + count + " posts");
             }
