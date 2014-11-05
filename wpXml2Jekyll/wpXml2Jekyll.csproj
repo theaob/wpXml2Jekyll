@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Html2Markdown">
-      <HintPath>..\packages\Html2Markdown.0.0.1.11272\lib\net45\Html2Markdown.dll</HintPath>
+      <HintPath>..\packages\Html2Markdown.1.0.0.33767\lib\net45\Html2Markdown.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
