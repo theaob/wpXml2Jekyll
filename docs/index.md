@@ -1,12 +1,9 @@
-## Welcome to GitHub Pages
+## Welcome to wpXml2Jekyll
 
-You can use the [editor on GitHub](https://github.com/bojanskr/wpXml2Jekyll/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+The conversion app from Wordpress.org to jekyll.
+This repo is forked from [Jekyll](https://jekyllrb.com/) with the intention to do a separate implementation for .Net Core 3.0 and above
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Main functionality
 
 ```markdown
 Syntax highlighted code block
